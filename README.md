@@ -22,8 +22,11 @@ Para executar, basta abrir um terminal na raiz do projeto e executar o comando `
 ### Rotas
 - Usuário
 
-| Método | Rota  | Função              |
-| :----- | :---- | :------------------ |
-| POST   | /user | Cadastra um usuário |
+| Método | Rota      | Função                      |
+| :----- | :-------- | :-------------------------- |
+| POST   | /user     | Cadastra um usuário         |
+| GET    | /user/:id | Retorna os dados do usuário |
+| PUT    | /user/:id | Altera os dados do usuário  |
+| Delete | /user/:id | Apaga o usuário do sistema  |
 
 - 

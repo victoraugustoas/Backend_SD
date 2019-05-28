@@ -29,3 +29,6 @@ node_modules
 
 # Variáveis de ambiente
 .env
+
+# arquivos gerados por scripts
+data.json
