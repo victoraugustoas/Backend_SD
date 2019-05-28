@@ -29,4 +29,8 @@ Para executar, basta abrir um terminal na raiz do projeto e executar o comando `
 | PUT    | /user/:id | Altera os dados do usuário  |
 | Delete | /user/:id | Apaga o usuário do sistema  |
 
-- 
+- Alimentos
+  
+| Método | Rota | Função                    |
+| :----- | :--- | :------------------------ |
+| POST   | /    | Cadastra um novo alimento |

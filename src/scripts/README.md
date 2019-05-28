@@ -11,7 +11,9 @@ Esse comando é responsável por instalar as dependencias necessárias pra corre
 
 ## Convenções
 1. Os arquivos gerados por scripts deverão ser colocados na pasta `assets/generated`.
-- csvBaseToJSON.py
+
+## Scripts
+- `csvBaseToJSON.py`
   - Para que serve?
     - Converter a base do formato csv para JSON.
   - Como utilizar:
@@ -20,7 +22,7 @@ Esse comando é responsável por instalar as dependencias necessárias pra corre
     - Ex: `python3 csvBaseToJSON.py ../../assets/Taco_4a_edicao_2011\ -\ CMVCol\ taco3.csv ../../assets/`
   - Execução:
     - A saida do programa será um arquivo chamado `data.json`, e será colocado no caminho especificado como segundo argumento.
-- translateKeysBase.py
+- `translateKeysBase.py`
   - Para que serve?
     - Serve para traduzir as chaves da base que estão em português para inglês.
   - Como utilizar:
@@ -32,7 +34,7 @@ Esse comando é responsável por instalar as dependencias necessárias pra corre
       - Ex: `python3 translateKeysBase.py ../../assets/generated/data.json ../../assets/traducoes.json ../../assets/generated/`
     - Execução:
       - A saida do programa será um arquivo chamado `translate.json`, e será colocado no caminho especificado nos argumentos.
-- populateDatabase.py
+- `populateDatabase.py`
   - Para que serve?
     - Serve para colocar os documentos da base no banco de dados.
   - Como utilizar:
@@ -44,5 +46,4 @@ Esse comando é responsável por instalar as dependencias necessárias pra corre
       - Ex: `python3 populateDatabase.py 123 tpf_sd_test ../../assets/generated/translate.json`
     - **Obs: Os documentos inseridos no banco de dados serão colocados dentro da collection chamada `foods`.**
     - Execução:
-      - A execução do programa popula a collection no banco de dado
-
+      - A execução do programa popula a collection no banco de dados
