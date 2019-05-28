@@ -1,0 +1,29 @@
+{
+  "name": "Backend_SD",
+  "version": "1.0.0",
+  "description": "Backend_SD",
+  "main": "app.js",
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victoraugustoas/Backend_SD.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/victoraugustoas/Backend_SD/issues"
+  },
+  "homepage": "https://github.com/victoraugustoas/Backend_SD#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.5.11"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
