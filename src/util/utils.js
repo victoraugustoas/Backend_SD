@@ -1,17 +1,25 @@
 module.exports = {
-    validateNotExistFieldOrError(field, msg) {
+    validateNotExistFieldOrError(field, msg, status) {
         // se o campo n estiver setado, lança um erro
         if (!field) {
             throw {
-                msg
+                msg,
+                status
             }
         }
     },
-    validateExistFieldOrError(field, msg) {
+    validateExistFieldOrError(field, msg, status) {
         // se o campo estiver setado, lança um erro
-        if (field) {
+        if (field.length >= 1) {
             throw {
-                msg
+                msg,
+                status
+            }
+        }
+        if (field && ![]) {
+            throw {
+                msg,
+                status
             }
         }
     }
