@@ -21,6 +21,11 @@ const userSchema = new Schema({
     dateOfBirth: {
         type: String,
         required: true
+    },
+    urlImg: {
+        type: String,
+        required: false,
+        default: ''
     }
 })
 

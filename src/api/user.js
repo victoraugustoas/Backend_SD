@@ -1,22 +1,23 @@
 const User = require('../models/User')
-const { validateFieldOrError } = require('../util/utils')
+const { validateNotExistFieldOrError, validateExistFieldOrError } = require('../util/utils')
 
 module.exports = (app) => {
 
     const save = async (req, res) => {
-        let { name, email, gender, password, dateOfBirth } = req.body
+        let { name, email, gender, password, dateOfBirth, urlImg } = req.body
 
         try {
-            validateFieldOrError(name, `Informe seu nome.`)
-            validateFieldOrError(email, `Informe seu email.`)
-            validateFieldOrError(gender, `Informe seu sexo.`)
-            validateFieldOrError(password, `Informe seu password.`)
-            validateFieldOrError(dateOfBirth, `Informe sua data de nascimento.`)
+            validateNotExistFieldOrError(name, `Informe seu nome.`)
+            validateNotExistFieldOrError(email, `Informe seu email.`)
+            validateNotExistFieldOrError(gender, `Informe seu sexo.`)
+            validateNotExistFieldOrError(password, `Informe seu password.`)
+            validateNotExistFieldOrError(dateOfBirth, `Informe sua data de nascimento.`)
 
             let user = await User.find({ email })
-            validateFieldOrError(user, `Usuário já cadastrado!`)
+            validateExistFieldOrError(user, `Usuário já cadastrado!`)
 
             user = new User({ name, email, gender, password, dateOfBirth })
+
             let saveOk = await user.save()
             if (saveOk) {
                 return res.status(200).send({ msg: `Usuário cadastrado com sucesso!` })
