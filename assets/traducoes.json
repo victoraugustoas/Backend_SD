@@ -1,0 +1,110 @@
+[
+    {
+        "pt": "Descrição dos alimentos",
+        "en": "name"
+    },
+    {
+        "pt": "Categoria",
+        "en": "category"
+    },
+    {
+        "pt": "Umidade",
+        "en": "humidity"
+    },
+    {
+        "pt": "Energia",
+        "en": "energy"
+    },
+    {
+        "pt": "Proteína",
+        "en": "protein"
+    },
+    {
+        "pt": "Lipídeos",
+        "en": "lipids"
+    },
+    {
+        "pt": "Colesterol",
+        "en": "cholesterol"
+    },
+    {
+        "pt": "Carboidrato",
+        "en": "carbohydrate"
+    },
+    {
+        "pt": "Fibra Alimentar",
+        "en": "food fiber"
+    },
+    {
+        "pt": "Cinzas",
+        "en": "ashes"
+    },
+    {
+        "pt": "Cálcio",
+        "en": "calcium"
+    },
+    {
+        "pt": "Magnésio",
+        "en": "magnesium"
+    },
+    {
+        "pt": "Manganês",
+        "en": "manganese"
+    },
+    {
+        "pt": "Fósforo",
+        "en": "phosphorus"
+    },
+    {
+        "pt": "Ferro",
+        "en": "iron"
+    },
+    {
+        "pt": "Sódio",
+        "en": "sodium"
+    },
+    {
+        "pt": "Potássio",
+        "en": "potassium"
+    },
+    {
+        "pt": "Cobre",
+        "en": "copper"
+    },
+    {
+        "pt": "Zinco",
+        "en": "zinc"
+    },
+    {
+        "pt": "Retinol",
+        "en": "retinol"
+    },
+    {
+        "pt": "RE",
+        "en": "re"
+    },
+    {
+        "pt": "RAE",
+        "en": "rae"
+    },
+    {
+        "pt": "Tiamina",
+        "en": "thiamine"
+    },
+    {
+        "pt": "Riboflavina",
+        "en": "riboflavin"
+    },
+    {
+        "pt": "Piridoxina",
+        "en": "pyridoxine"
+    },
+    {
+        "pt": "Niacina",
+        "en": "niacin"
+    },
+    {
+        "pt": "Vitamina C",
+        "en": "vitamin c"
+    }
+]
