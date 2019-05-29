@@ -31,6 +31,9 @@ Para executar, basta abrir um terminal na raiz do projeto e executar o comando `
 
 - Alimentos
   
-| Método | Rota | Função                    |
-| :----- | :--- | :------------------------ |
-| POST   | /    | Cadastra um novo alimento |
+| Método | Rota      | Função                       |
+| :----- | :-------- | :--------------------------- |
+| POST   | /food     | Cadastra um novo alimento    |
+| GET    | /food/:id | Retorna os dados do alimento |
+| PUT    | /food/:id | Altera os dados do alimento  |
+| DELETE | /food/:id | Remove o alimento do sitema  |
