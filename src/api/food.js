@@ -136,7 +136,9 @@ module.exports = (app) => {
         }
     }
 
-    const searchByName = async (req, res) => { }
+    const searchByName = async (req, res) => {
+        res.send('funcionando ...')
+    }
 
     app.food = {
         save,
