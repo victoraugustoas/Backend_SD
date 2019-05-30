@@ -88,10 +88,62 @@ module.exports = (app) => {
         }
     }
 
+    const searchByNutrient = async (req, res) => {
+        let nutrient = req.query.nutrient
+        let sortBy = req.query.sort
+        let limit = parseInt(req.query.limit)
+        let page = parseInt(req.query.page)
+
+        try {
+            validateNotExistFieldOrError(nutrient, `Informe o nutriente na query string.`, 400)
+            validateNotExistFieldOrError(sortBy, `Informe a direção da ordenação na query string.`, 400)
+            validateNotExistFieldOrError(limit, `Informe o limite de documentos na query string.`, 400)
+            validateNotExistFieldOrError(page, `Informe a página na query string.`, 400)
+
+            let nutrientValue = `${nutrient}.value`
+
+            let sortParams = {}
+            // constroi o seguinte objeto { nutrient.value: asc }
+            sortParams[nutrientValue] = sortBy
+
+
+            let query = {}
+            // filtra somente os documentos cujo o valor do nutriente é um número
+            query[nutrientValue] = { $type: 'number' }
+
+            let foods = await Food.find(query)
+                .setOptions({
+                    skip: page * limit,
+                    limit,
+                    sort: sortParams
+                })
+                .exec()
+
+            let result = {
+                page,
+                limit,
+                data: foods
+            }
+
+            res.status(200).send(result)
+        } catch (error) {
+            if (error.status) {
+                let { msg } = error
+                return res.status(error.status).send({ msg })
+            } else {
+                return res.status(500).send(error)
+            }
+        }
+    }
+
+    const searchByName = async (req, res) => { }
+
     app.food = {
         save,
         getByID,
         edit,
-        erase
+        erase,
+        searchByNutrient,
+        searchByName
     }
 }
