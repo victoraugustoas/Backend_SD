@@ -88,11 +88,16 @@ module.exports = (app) => {
         }
     }
 
-    const searchByNutrient = async (req, res) => {
+    const searchByNutrient = async(req, res) => {
         let nutrient = req.query.nutrient
         let sortBy = req.query.sort
         let limit = parseInt(req.query.limit)
         let page = parseInt(req.query.page)
+
+        // caso a página seja 1
+        if (page == 1) {
+            page = 0
+        }
 
         try {
             validateNotExistFieldOrError(nutrient, `Informe o nutriente na query string.`, 400)
@@ -103,12 +108,12 @@ module.exports = (app) => {
             let nutrientValue = `${nutrient}.value`
 
             let sortParams = {}
-            // constroi o seguinte objeto { nutrient.value: asc }
+                // constroi o seguinte objeto { nutrient.value: asc }
             sortParams[nutrientValue] = sortBy
 
 
             let query = {}
-            // filtra somente os documentos cujo o valor do nutriente é um número
+                // filtra somente os documentos cujo o valor do nutriente é um número
             query[nutrientValue] = { $type: 'number' }
 
             let foods = await Food.find(query)
@@ -136,7 +141,55 @@ module.exports = (app) => {
         }
     }
 
-    const searchByName = async (req, res) => { }
+    let documents = null
+
+    const searchByName = async(req, res) => {
+
+        try {
+            let { name } = req.body
+            let distance = []
+
+            validateNotExistFieldOrError(name, `Informe o nome do alimento.`, 400)
+
+            if (documents == null) {
+                documents = await Food.find()
+            }
+
+            // calcula a similaridade para todos os documentos presentes na base
+            documents.forEach((ele) => {
+                let aux = {
+                    similarity: 0,
+                    data: null
+                }
+
+                // similaridade de strings utilizando jaro-winkler
+                aux.similarity = jaroWinkler(name, ele.name.value)
+                aux.data = ele
+
+                distance.push(aux)
+            })
+
+            // ordena os elementos de acordo com sua similaridade
+            let ordened = distance.sort((a, b) => {
+                return a - b
+            })
+
+            distance = ordened.slice(0, 9)
+            distance = distance.map((ele) => {
+                return ele.data
+            })
+
+            return res.status(200).send(distance)
+        } catch (error) {
+            if (error.status) {
+                let { msg } = error
+                return res.status(error.status).send({ msg })
+            } else {
+                console.log(error)
+                return res.status(500).send(error)
+            }
+        }
+    }
 
     app.food = {
         save,
