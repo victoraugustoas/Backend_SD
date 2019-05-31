@@ -42,6 +42,8 @@ with open(arg) as arq:
                     'type': fieldname[1]
                 }
             else:
+                # normaliza o nome dos alimentos
+                value = value.replace(',', '').lower()
                 obj[fieldname[0]] = {
                     'value': value
                 }
