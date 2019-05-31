@@ -11,6 +11,10 @@ const mealSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    idUser: {
+        type: ObjectID,
+        required: true
+    },
     description: {
         type: String
     },

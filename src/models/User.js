@@ -26,6 +26,10 @@ const userSchema = new Schema({
         type: String,
         required: false,
         default: ''
+    },
+    isPremium: {
+        type: Boolean,
+        default: false
     }
 })
 

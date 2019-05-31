@@ -1,18 +1,25 @@
-const Meal = require('../models/Meal')
-const { validateExistFieldOrError, validateNotExistFieldOrError } = require('../util/utils')
+const Meal = require('../../models/Meal/Meal')
+const { validateExistFieldOrError, validateNotExistFieldOrError } = require('../../util/utils')
 
 module.exports = (app) => {
 
     const save = async (req, res) => {
-        let { name, description, visibility, classification, urlImg, avgEvaluation, ingredients } = req.body
+        let { name, idUser, description, visibility, classification, urlImg, avgEvaluation, ingredients } = req.body
 
         try {
             validateNotExistFieldOrError(name, `Infome o nome da refeição.`, 400)
             validateNotExistFieldOrError(classification, `Informe a classificação da refeição.`, 400)
 
+            // verifica se usuário é premium
+            let findUser = User.findById(id)
+            if (!findUser) {
+                return res.status(404).send({ msg: `Não foi possível encontrar o usuário.` })
+            }
+
             let newMeal = new Meal({
                 name,
                 description,
+                idUser,
                 visibility,
                 classification,
                 urlImg,
@@ -20,11 +27,15 @@ module.exports = (app) => {
                 ingredients
             })
 
-            let saveOk = await newMeal.save()
-            if (saveOk) {
-                return res.status(201).send({ msg: `Refeição adicionada com sucesso.` })
+            if (findUser.isPremium) {
+                let saveOk = await newMeal.save()
+                if (saveOk) {
+                    return res.status(201).send({ msg: `Refeição adicionada com sucesso.` })
+                } else {
+                    return res.status(500).send({ msg: `Não foi possivel salvar a refeição.` })
+                }
             } else {
-                return res.status(500).send({ msg: `Não foi possivel salvar a refeição.` })
+                res.status(400).send({ msg: `Funcionalidade disponível apenas para usuários premium` })
             }
         } catch (error) {
             if (error.status) {
@@ -61,7 +72,8 @@ module.exports = (app) => {
     }
 
     const edit = async (req, res) => {
-        let { id, mealUpdated } = req.params
+        let { id } = req.params
+        let mealUpdated = req.body
         try {
             validateNotExistFieldOrError(id, `Informe o id para realizar a alteração.`, 400)
 

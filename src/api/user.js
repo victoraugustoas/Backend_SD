@@ -4,7 +4,7 @@ const { validateNotExistFieldOrError, validateExistFieldOrError } = require('../
 module.exports = (app) => {
 
     const save = async (req, res) => {
-        let { name, email, gender, password, dateOfBirth, urlImg } = req.body
+        let { name, email, gender, password, dateOfBirth, urlImg, isPremium } = req.body
 
         try {
             validateNotExistFieldOrError(name, `Informe seu nome.`, 400)
@@ -16,7 +16,7 @@ module.exports = (app) => {
             let user = await User.find({ email })
             validateExistFieldOrError(user, `Usuário já cadastrado!`, 409)
 
-            user = new User({ name, email, gender, password, dateOfBirth, urlImg })
+            user = new User({ name, email, gender, password, dateOfBirth, urlImg, isPremium })
 
             let saveOk = await user.save()
             if (saveOk) {
@@ -53,10 +53,10 @@ module.exports = (app) => {
 
     const edit = async (req, res) => {
         let { id } = req.params
-        let { name, email, gender, password, dateOfBirth, urlImg } = req.body
+        let { name, email, gender, password, dateOfBirth, urlImg, isPremium } = req.body
 
         try {
-            let newUser = { name, email, gender, password, dateOfBirth, urlImg }
+            let newUser = { name, email, gender, password, dateOfBirth, urlImg, isPremium }
             let userOk = await User.findByIdAndUpdate(id, newUser)
 
             if (userOk) {
