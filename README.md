@@ -22,19 +22,29 @@ Para executar, basta abrir um terminal na raiz do projeto e executar o comando `
 ### Rotas
 - Usuário
 
-| Método | Rota      | Função                      | Parâmetros |
-| :----- | :-------- | :-------------------------- | :--------- |
-| POST   | /user     | Cadastra um usuário         |            |
-| GET    | /user/:id | Retorna os dados do usuário | ID         |
-| PUT    | /user/:id | Altera os dados do usuário  | ID         |
-| Delete | /user/:id | Apaga o usuário do sistema  | ID         |
+| Método | Rota      | Função                      | Parâmetros           |
+| :----- | :-------- | :-------------------------- | :------------------- |
+| POST   | /user     | Cadastra um usuário         | Dados do usuário     |
+| GET    | /user/:id | Retorna os dados do usuário | ID                   |
+| PUT    | /user/:id | Altera os dados do usuário  | ID, Dados do usuário |
+| Delete | /user/:id | Apaga o usuário do sistema  | ID                   |
 
 - Alimentos
   
 | Método | Rota                   | Função                                                                         | Parâmetros                  |
 | :----- | :--------------------- | :----------------------------------------------------------------------------- | :-------------------------- |
-| POST   | /food                  | Cadastra um novo alimento                                                      |                             |
+| POST   | /food                  | Cadastra um novo alimento                                                      | Dados do alimento           |
 | GET    | /food/:id              | Retorna os dados do alimento                                                   | ID                          |
-| PUT    | /food/:id              | Altera os dados do alimento                                                    | ID                          |
+| PUT    | /food/:id              | Altera os dados do alimento                                                    | ID; Dados do alimento       |
 | DELETE | /food/:id              | Remove o alimento do sitema                                                    | ID                          |
 | GET    | /food/search/nutrient/ | Retorna a lista de alimentos conforme os parâmetros fornecidos na query string | nutrient; sort; limit; page |
+| GET    | /food/search/name/     | Retorna a lista de alimentos conforme o algoritmo de similaridade de strings   | name                        |
+
+- Refeições
+
+| Método | Rota      | Função                        | Parâmetros            |
+| :----- | :-------- | :---------------------------- | :-------------------- |
+| POST   | /meal/    | Cadastra uma nova refeição    | Dados da refeição     |
+| GET    | /meal/:id | Retorna os dados da refeição. | ID                    |
+| PUT    | /meal/:id | Altera os dados da refeição   | ID; Dados da Refeição |
+| DELETE | /meal/:id | Remove a refeição do sistema. | ID                    |

@@ -5,19 +5,17 @@ const mealSchema = new mongoose.Schema({
     ingredients: [{
         idFood: { type: ObjectID, required: true },
         portion: { type: Number, required: true },
-        qtd_portion: { type: Number, required: true }
+        qtdPortion: { type: Number, required: true }
     }],
     name: {
         type: String,
         required: true
     },
     description: {
-        type: String,
-        required: true
+        type: String
     },
     visibility: {
         type: Boolean,
-        required: true,
         default: false
     },
     classification: {
