@@ -43,6 +43,7 @@ Esse comando é responsável por instalar as dependencias necessárias pra corre
       - Password do admin SGBD utilizado
       - Nome do banco de dados que será utilizado para inserção
       - Arquivo que contém os dados a serem lidos e inseridos no banco de dados.
+      - Nome da collection no banco de dados onde os dados serão colocados
       - Atributo booleano para inserção no banco de dados local ou remoto, `true` caso seja local
       - Ex: `python3 populateDatabase.py 123 tpf_sd_test ../../assets/generated/translate.json`
     - **Obs: Os documentos inseridos no banco de dados serão colocados dentro da collection chamada `foods`.**
