@@ -27,8 +27,11 @@ documents = None
 with open(data) as arq:
     documents = json.load(arq)
 
-if(local):
-    for doc in documents:
-        doc['_id'] = ObjectId(doc['_id'])
+if (local):
+    try:
+        for doc in documents:
+            doc['_id'] = ObjectId(doc['_id'])
+    except:
+        pass
 
 collection.insert_many(documents)
