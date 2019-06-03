@@ -43,7 +43,22 @@ Esse comando é responsável por instalar as dependencias necessárias pra corre
       - Password do admin SGBD utilizado
       - Nome do banco de dados que será utilizado para inserção
       - Arquivo que contém os dados a serem lidos e inseridos no banco de dados.
+      - Atributo booleano para inserção no banco de dados local ou remoto, `true` caso seja local
       - Ex: `python3 populateDatabase.py 123 tpf_sd_test ../../assets/generated/translate.json`
     - **Obs: Os documentos inseridos no banco de dados serão colocados dentro da collection chamada `foods`.**
     - Execução:
       - A execução do programa popula a collection no banco de dados
+- getPopulatedDatabase.py
+  - Pra que serve?
+    - Serve para resgatar todos os documentos da base de dados.
+  - Como utilizar:
+    - O script necessita de três argumentos passados via linha de comando
+    - Os argumentos são:
+    - Password do admin SGBD utilizado
+    - Nome do banco de dados que será utilizado para inserção
+    - Contém o caminho do arquivo que será gerado pelo script
+    - Atributo booleano para inserção no banco de dados local ou remoto, `true` caso seja local
+    - Ex: `python3 getPopulatedDatabase.py 123 tpf_sd_test ../../assets/generated/ true`
+  - **Obs: Os documentos recuperados do banco de dados serão os presentes na collection foods**
+  - Execução:
+    - A execução do programa cria um arquivo chamado `getDatabase.json`, e será colocado no caminho especificado nos argumentos.

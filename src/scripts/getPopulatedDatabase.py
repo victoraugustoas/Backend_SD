@@ -1,10 +1,13 @@
 import pymongo
 import sys
 import json
+import os
+from pprint import pprint
 
 password = sys.argv[1]
 database = sys.argv[2]
-data = sys.argv[3]
+pathToSave = os.path.normpath(sys.argv[3])
+
 try:
     local = sys.argv[4]
 except:
@@ -19,8 +22,9 @@ else:
 db = client[database]  # acessa o banco de dados
 collection = db['foods']  # acessa a coleção foods dentro desse banco de dados
 
-documents = None
-with open(data) as arq:
-    documents = json.load(arq)
-
-collection.insert_many(documents)
+documents = list(collection.find())
+for doc in documents:
+    doc['_id'] = str(doc['_id'])
+pprint(documents)
+with open(pathToSave+'/getDatabase.json', 'w') as arq:
+    json.dump(documents, arq)
