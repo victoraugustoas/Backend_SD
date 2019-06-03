@@ -51,14 +51,14 @@ def normalizeByPortion(df,portionBase=50):
 
 def normalizeByMax(df):
     # Obter as categorias e nutrientes da base
-    categories = list(df['category'].value_counts().index)
+    categories = list(df['Categoria'].value_counts().index)
     nutrients = list(df.columns[2:])
 
     # Cria dicionário para o valor máximo de cada nutriente, por categoria.
     dictCN = defaultdict(dict)
     for categorie in categories:
         for nutrient in nutrients:
-            dictCN[categorie][nutrient] = df[df['category'] == categorie][nutrient].max()
+            dictCN[categorie][nutrient] = df[df['Categoria'] == categorie][nutrient].max()
             
     # Normalizar dados com base no maior da categoria
 
@@ -70,7 +70,7 @@ def normalizeByMax(df):
             return nutrient_value  
 
     for nutrient in nutrients:
-        df[nutrient] = df.apply(lambda row: normalizeMax(row['category'],row[nutrient],row['portions'],nutrient),axis=1)
+        df[nutrient] = df.apply(lambda row: normalizeMax(row['Categoria'],row[nutrient],row['portions'],nutrient),axis=1)
 
 if __name__ == '__main__':
 

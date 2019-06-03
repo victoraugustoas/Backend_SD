@@ -57,7 +57,7 @@ def getSimilars(data,prodA,topk=10):
     
     for i,product in enumerate(productsSimilarity):
         inner = {}
-        inner['id'] = product[0]
+        inner['_id'] = product[0]
         inner['similaridade'] = product[1]
         productsSimilarity[i] = inner
     
@@ -67,7 +67,7 @@ def getAllSimilars(data):
     listSimilars = []
     for product in data:
         model = {}
-        model['id'] = product['_id"']['value']
+        model['_id'] = product['_id"']['value']
         model['similars'] = getSimilars(data,product,10)
         listSimilars.append(model)
     return listSimilars 
