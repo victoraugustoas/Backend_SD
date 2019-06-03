@@ -1,5 +1,4 @@
 pymongo
 dnspython
-json
 pandas
 numpy
