@@ -22,6 +22,28 @@ Esse comando é responsável por instalar as dependencias necessárias pra corre
     - Ex: `python3 csvBaseToJSON.py ../../assets/Taco_4a_edicao_2011\ -\ CMVCol\ taco3.csv ../../assets/`
   - Execução:
     - A saida do programa será um arquivo chamado `data.json`, e será colocado no caminho especificado como segundo argumento.
+
+- `normalizeBase.py`
+  - Para que serve?
+    - Normalizar a base de dados 
+  - Como utilizar:
+    - O programa requer dois parâmetros passados via linha de comando
+    - O primeiro comando diz respeito ao csv em que estão os dados da base, o segundo comando é onde será armazenado a novo arquivo da base normalizada
+    - Ex: `python3 normalizeBase.py ../../assets/Taco_4a_edicao_2011\ -\ CMVCol\ taco3.csv ../../assets/`
+  - Execução:
+    - A saida do programa será um arquivo com o nome da base passada por parâmetro + `_new.json`, e será colocado no caminho especificado como segundo argumento.
+
+- `generateSimilars.py`
+  - Para que serve?
+    - Gerar um arquivo .json com os similares de cada produto da base.
+  - Como utilizar:
+    - O programa requer dois parâmetros passados via linha de comando
+    - O primeiro parâmetro diz respeito ao .json da base de dados, o segundo parâmetro é onde será armazenado o arquivo com os similares.
+    - Ex: `python3 generateSimilars.py getDatabase.json ./`
+  - Execução:
+    - A saida do programa será um arquivo chamado `similars.json`, e será colocado no caminho especificado como segundo argumento.
+
+
 - `translateKeysBase.py`
   - Para que serve?
     - Serve para traduzir as chaves da base que estão em português para inglês.
