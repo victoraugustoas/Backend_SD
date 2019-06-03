@@ -12,7 +12,7 @@ def euclidianDistance(valueA,valueB):
 def getSimilarity(prodA,prodB):
     
     # Atributos que devem ir para o cálculo de similaridade
-    nutrients = [key for key in data[0].keys() if (key != 'name' and key != 'category')]
+    nutrients = [key for key in data[0].keys() if (key != 'name' and key != 'category' and key != '_id')]
     dim = len(nutrients)
     similarity = 0
     sum_mA = dim
@@ -51,14 +51,14 @@ def getSimilarity(prodA,prodB):
 def getSimilars(data,prodA,topk=10):
     productsSimilarity = []
     for prodB in data:
-        productsSimilarity.append((prodB['_id"']['value'],getSimilarity(prodA,prodB)))
+        productsSimilarity.append((prodB['_id'],getSimilarity(prodA,prodB)))
     productsSimilarity.sort(key=lambda x: x[1],reverse=True)
     productsSimilarity = productsSimilarity[1:topk]
     
     for i,product in enumerate(productsSimilarity):
         inner = {}
         inner['_id'] = product[0]
-        inner['similaridade'] = product[1]
+        inner['similarity'] = product[1]
         productsSimilarity[i] = inner
     
     return productsSimilarity
@@ -67,7 +67,7 @@ def getAllSimilars(data):
     listSimilars = []
     for product in data:
         model = {}
-        model['_id'] = product['_id"']['value']
+        model['_id'] = product['_id']
         model['similars'] = getSimilars(data,product,10)
         listSimilars.append(model)
     return listSimilars 
