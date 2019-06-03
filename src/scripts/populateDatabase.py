@@ -8,7 +8,8 @@ database = sys.argv[2]
 data = sys.argv[3]
 collection = sys.argv[4]
 try:
-    local = bool(sys.argv[5])
+    similars = bool(sys.argv[5])
+    local = bool(sys.argv[6])
 except:
     local = False
 
@@ -27,11 +28,10 @@ documents = None
 with open(data) as arq:
     documents = json.load(arq)
 
-if (local):
-    try:
-        for doc in documents:
-            doc['_id'] = ObjectId(doc['_id'])
-    except:
-        pass
+if(similars):
+    for doc in documents:
+        doc['_id'] = ObjectId(doc['_id'])
+        for docInner in doc['similars']:
+            docInner['_id'] = ObjectId(docInner['_id'])
 
 collection.insert_many(documents)
