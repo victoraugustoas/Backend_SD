@@ -41,7 +41,10 @@ with open(data) as arq:
 if(similars):
     for doc in documents:
         doc['_id'] = ObjectId(doc['_id'])
-        for docInner in doc['similars']:
-            docInner['_id'] = ObjectId(docInner['_id'])
+        try:
+            for docInner in doc['similars']:
+                docInner['_id'] = ObjectId(docInner['_id'])
+        except:
+            pass
 
 collection.insert_many(documents)

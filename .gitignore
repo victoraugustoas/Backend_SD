@@ -29,6 +29,7 @@ node_modules
 
 # Variáveis de ambiente
 .env
+password_db.txt
 
 # arquivos gerados por scripts
 assets/generated/*.json

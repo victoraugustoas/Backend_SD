@@ -44,8 +44,8 @@ module.exports = (app) => {
     }
 
     const getByID = async (req, res) => {
-        let { id } = req.params
         try {
+            let { id } = req.params
             let food = await Food.findById(id)
 
             if (!food) return res.status(404).send({ msg: `Alimento nao encontrado` })

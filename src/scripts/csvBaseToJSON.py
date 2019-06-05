@@ -31,12 +31,15 @@ with open(arg) as arq:
     for row in reader:
         for field in reader.fieldnames:
             fieldname = field.split(';')
+                
             try:
                 value = float(row[field])
             except:
                 value = row[field]
 
-            if (len(fieldname) > 1):
+            if(field == '_id'):
+                obj[field] = row[field]
+            elif (len(fieldname) > 1):
                 obj[fieldname[0]] = {
                     'value': value,
                     'type': fieldname[1]
