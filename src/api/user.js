@@ -1,7 +1,14 @@
 const User = require('../models/User')
+const bcrypt = require('bcrypt')
 const { validateNotExistFieldOrError, validateExistFieldOrError } = require('../util/utils')
 
 module.exports = (app) => {
+
+    const encryptPassword = async (password) => {
+        const salt = 10
+        let encrypt = await bcrypt.hash(password, salt)
+        return encrypt
+    }
 
     const save = async (req, res) => {
         let { name, email, gender, password, dateOfBirth, urlImg, isPremium } = req.body
@@ -15,6 +22,8 @@ module.exports = (app) => {
 
             let user = await User.find({ email })
             validateExistFieldOrError(user, `Usuário já cadastrado!`, 409)
+
+            password = await encryptPassword(password)
 
             user = new User({ name, email, gender, password, dateOfBirth, urlImg, isPremium })
 

@@ -11,6 +11,7 @@ require('./src/config/db')(app)
 require('./src/config/middlewares')(app)
 
 // API
+const auth = require('./src/api/auth')(app)
 const user = require('./src/api/user')(app)
 const food = require('./src/api/food')(app)
 const meal = require('./src/api/meal/meal')(app)
