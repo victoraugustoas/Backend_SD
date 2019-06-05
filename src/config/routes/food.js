@@ -5,7 +5,7 @@ module.exports = (app) => {
 
     // CRUD
     router.post('/', app.food.save)
-    router.get('/:id', app.food.getByID)
+    router.get('/:id', app.auth.authenticate(), app.food.getByID)
     router.put('/:id', app.food.edit)
     router.delete('/:id', app.food.erase)
 

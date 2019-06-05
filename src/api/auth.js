@@ -74,10 +74,10 @@ module.exports = (app) => {
     const strategy = new Strategy({
         secretOrKey: process.env.AUTH_SECRET,
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
-    }, async (payload, done) => {
+    }, async(payload, done) => {
         let user = await User.findById(payload._id)
         if (user) {
-            done(null, user ? { ...payload } : false)
+            done(null, user ? user : false)
         } else {
             done(null, false)
         }

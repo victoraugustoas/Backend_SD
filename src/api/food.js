@@ -42,11 +42,24 @@ module.exports = (app) => {
         return lstSimilars
     }
 
-    const getByID = async (req, res) => {
+    const getByID = async(req, res) => {
         let { id } = req.params
         try {
             let food = await Food.findById(id)
-            let lstSimilars = await getSimilars(id)
+
+            if (!food) return res.status(404).send({ msg: `Alimento nao encontrado` })
+
+            if (req.user.isPremium) {
+                let lstSimilars = await getSimilars(id)
+                if (lstSimilars) {
+                    return res.status(200).send({ food, lstSimilars })
+                }
+            } else {
+                // Caso o usuário não seja premium
+                let { name, category, energy, humidity, protein, lipids, carbohydrate } = food
+                let notPremium = { name, category, energy, humidity, protein, lipids, carbohydrate }
+                return res.status(400).send({ food: notPremium })
+            }
 
             if (food && lstSimilars) {
                 return res.status(200).send({ food, lstSimilars })

@@ -36,12 +36,13 @@ module.exports = (app) => {
                 let { msg } = error
                 return res.status(error.status).send({ msg })
             } else {
+                console.log(error)
                 return res.status(500).send(error)
             }
         }
     }
 
-    const getByID = async (req, res) => {
+    const getByID = async(req, res) => {
         let { id } = req.params
 
         try {
