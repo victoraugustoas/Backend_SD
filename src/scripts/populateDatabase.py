@@ -8,12 +8,18 @@ database = sys.argv[2]
 data = sys.argv[3]
 collection = sys.argv[4]
 try:
-    similars = bool(sys.argv[5])
+    if(sys.argv[5] == 'true'):
+        similars = True
+    else:
+        similars = False
 except:
     similars = False
-    
+
 try:
-    local = bool(sys.argv[6])
+    if(sys.argv[6] == 'true'):
+        local = True
+    else:
+        local = False
 except:
     local = False
 

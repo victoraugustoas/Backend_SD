@@ -10,7 +10,10 @@ database = sys.argv[2]
 pathToSave = os.path.normpath(sys.argv[3])
 collection = sys.argv[4]
 try:
-    local = bool(sys.argv[5])
+    if(sys.argv[5] == 'true'):
+        local = True
+    else:
+        local = False
 except:
     local = False
 
