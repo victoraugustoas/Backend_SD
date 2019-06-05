@@ -42,7 +42,7 @@ module.exports = (app) => {
         return lstSimilars
     }
 
-    const getByID = async(req, res) => {
+    const getByID = async (req, res) => {
         let { id } = req.params
         try {
             let food = await Food.findById(id)
@@ -56,9 +56,7 @@ module.exports = (app) => {
                 }
             } else {
                 // Caso o usuário não seja premium
-                let { name, category, energy, humidity, protein, lipids, carbohydrate } = food
-                let notPremium = { name, category, energy, humidity, protein, lipids, carbohydrate }
-                return res.status(400).send({ food: notPremium })
+                return res.status(400).send(getNutrientsNotPremium(food))
             }
 
             if (food && lstSimilars) {
@@ -118,18 +116,24 @@ module.exports = (app) => {
         }
     }
 
+    const getNutrientsNotPremium = (food) => {
+        let { name, category, energy, humidity, protein, lipids, carbohydrate } = food
+        let notPremium = { name, category, energy, humidity, protein, lipids, carbohydrate }
+        return notPremium
+    }
+
     const searchByNutrient = async (req, res) => {
-        let nutrient = req.query.nutrient
-        let sortBy = req.query.sort
-        let limit = parseInt(req.query.limit)
-        let page = parseInt(req.query.page)
-
-        // caso a página seja 1
-        if (page == 1) {
-            page = 0
-        }
-
         try {
+            let nutrient = req.query.nutrient
+            let sortBy = req.query.sort
+            let limit = parseInt(req.query.limit)
+            let page = parseInt(req.query.page)
+
+            // caso a página seja 1
+            if (page == 1) {
+                page = 0
+            }
+
             validateNotExistFieldOrError(nutrient, `Informe o nutriente na query string.`, 400)
             validateNotExistFieldOrError(sortBy, `Informe a direção da ordenação na query string.`, 400)
             validateNotExistFieldOrError(limit, `Informe o limite de documentos na query string.`, 400)
@@ -154,10 +158,21 @@ module.exports = (app) => {
                 })
                 .exec()
 
-            let result = {
-                page,
-                limit,
-                data: foods
+            let result = {}
+
+            if (req.user.isPremium) {
+                result = {
+                    page,
+                    limit,
+                    data: foods
+                }
+            } else {
+                foods = foods.map((ele) => {
+                    return getNutrientsNotPremium(ele)
+                })
+                result = {
+                    page, limit, data: foods
+                }
             }
 
             res.status(200).send(result)
@@ -166,6 +181,7 @@ module.exports = (app) => {
                 let { msg } = error
                 return res.status(error.status).send({ msg })
             } else {
+                console.log(error)
                 return res.status(500).send(error)
             }
         }
