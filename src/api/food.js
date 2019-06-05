@@ -1,5 +1,6 @@
 const Food = require('../models/Food')
 const Similars = require('../models/Similars')
+const jaroWinkler = require('jaro-winkler')
 const { validateNotExistFieldOrError, validateExistFieldOrError } = require('../util/utils')
 
 module.exports = (app) => {
@@ -145,7 +146,6 @@ module.exports = (app) => {
             // constroi o seguinte objeto { nutrient.value: asc }
             sortParams[nutrientValue] = sortBy
 
-
             let query = {}
             // filtra somente os documentos cujo o valor do nutriente é um número
             query[nutrientValue] = { $type: 'number' }
@@ -190,7 +190,6 @@ module.exports = (app) => {
     let documents = null
 
     const searchByName = async (req, res) => {
-
         try {
             let { name } = req.body
             let distance = []
@@ -224,6 +223,12 @@ module.exports = (app) => {
             distance = distance.map((ele) => {
                 return ele.data
             })
+
+            if (!req.user.isPremium) {
+                distance = distance.map((ele) => {
+                    return getNutrientsNotPremium(ele)
+                })
+            }
 
             return res.status(200).send(distance)
         } catch (error) {

@@ -11,7 +11,7 @@ module.exports = (app) => {
 
     // Buscas
     router.get('/search/nutrient/', app.auth.authenticate(), app.food.searchByNutrient)
-    router.post('/search/name/', app.food.searchByName)
+    router.post('/search/name/', app.auth.authenticate(), app.food.searchByName)
 
     app.use('/food', router)
 }
