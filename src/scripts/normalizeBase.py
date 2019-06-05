@@ -5,12 +5,20 @@ import os
 import sys
 
 from collections import defaultdict
+from bson.objectid import ObjectId
+
 
 def clearBase(df):
     df.replace(['NA','Tr','*'],np.nan,inplace=True)
     df.dropna(thresh=round(df.shape[1]/2),inplace=True)
     cols = list(df.columns[2:])
     df[cols] = df[cols].apply(pd.to_numeric, errors='coerce', axis=1)
+
+def generateIds(df):
+    ids = []
+    for i in range(0,df.shape[0]):
+        ids.append(ObjectId())
+    df['_id'] = ids
 
 def generatePortions(df):
     # Gerar um vetor e coluna com a porção de cada alimento (em g)
@@ -35,7 +43,9 @@ def generatePortions(df):
     df['portions'] = portions
 
 def normalizeByPortion(df,portionBase=50):
-    nutrients = list(df.columns[3:])
+    
+    nutrients = list(df.columns[3:-1])
+    
     # Normalizar dados para uma porção X g
     portion_base = 50 # em g
 
@@ -52,7 +62,7 @@ def normalizeByPortion(df,portionBase=50):
 def normalizeByMax(df):
     # Obter as categorias e nutrientes da base
     categories = list(df['Categoria'].value_counts().index)
-    nutrients = list(df.columns[2:])
+    nutrients = list(df.columns[2:-1])
 
     # Cria dicionário para o valor máximo de cada nutriente, por categoria.
     dictCN = defaultdict(dict)
@@ -79,6 +89,7 @@ if __name__ == '__main__':
 
     clearBase(df)
     generatePortions(df)
+    generateIds(df)
     normalizeByPortion(df,50)
 
     df_similarity = df.copy()

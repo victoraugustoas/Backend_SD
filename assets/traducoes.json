@@ -106,5 +106,9 @@
     {
         "pt": "Vitamina C",
         "en": "vitamin c"
+    },
+    {
+        "pt": "_id",
+        "en": "_id"
     }
 ]
