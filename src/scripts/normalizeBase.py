@@ -80,8 +80,14 @@ if __name__ == '__main__':
     clearBase(df)
     generatePortions(df)
     normalizeByPortion(df,50)
-    normalizeByMax(df)
+
+    df_similarity = df.copy()
+    normalizeByMax(df_similarity)
+
     df.drop('portions',axis=1,inplace=True)
     df.fillna('Null',inplace=True)
+    df_similarity.drop('portions',axis=1,inplace=True)
+    df_similarity.fillna('Null',inplace=True)
 
     df.to_csv(pathToSave + '/' + (sys.argv[1].split('/')[-1])[:-4] + '_new.csv',index=False)
+    df_similarity.to_csv(pathToSave + '/' + (sys.argv[1].split('/')[-1])[:-4] + '_similarity.csv',index=False)
