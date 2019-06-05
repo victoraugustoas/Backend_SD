@@ -1,4 +1,5 @@
 const Food = require('../models/Food')
+const Similars = require('../models/Similars')
 const { validateNotExistFieldOrError, validateExistFieldOrError } = require('../util/utils')
 
 module.exports = (app) => {
@@ -28,12 +29,27 @@ module.exports = (app) => {
         }
     }
 
+    const getSimilars = async (id) => {
+        let similars = await Similars.findById(id)
+
+        let lstSimilars = []
+        for (let i = 0; i < similars['similars'].length; i++) {
+            let ele = similars['similars'][i]
+            let aux = await Food.findById(ele._id)
+            lstSimilars.push(aux)
+        }
+
+        return lstSimilars
+    }
+
     const getByID = async (req, res) => {
         let { id } = req.params
         try {
             let food = await Food.findById(id)
-            if (food) {
-                return res.status(200).send(food)
+            let lstSimilars = await getSimilars(id)
+
+            if (food && lstSimilars) {
+                return res.status(200).send({ food, lstSimilars })
             } else {
                 return res.status(404).send({ msg: `Alimento nao encontrado` })
             }
@@ -42,6 +58,7 @@ module.exports = (app) => {
                 let { msg } = error
                 return res.status(error.status).send({ msg })
             } else {
+                console.log(error)
                 return res.status(500).send(error)
             }
         }
@@ -88,7 +105,7 @@ module.exports = (app) => {
         }
     }
 
-    const searchByNutrient = async(req, res) => {
+    const searchByNutrient = async (req, res) => {
         let nutrient = req.query.nutrient
         let sortBy = req.query.sort
         let limit = parseInt(req.query.limit)
@@ -108,12 +125,12 @@ module.exports = (app) => {
             let nutrientValue = `${nutrient}.value`
 
             let sortParams = {}
-                // constroi o seguinte objeto { nutrient.value: asc }
+            // constroi o seguinte objeto { nutrient.value: asc }
             sortParams[nutrientValue] = sortBy
 
 
             let query = {}
-                // filtra somente os documentos cujo o valor do nutriente é um número
+            // filtra somente os documentos cujo o valor do nutriente é um número
             query[nutrientValue] = { $type: 'number' }
 
             let foods = await Food.find(query)
@@ -143,7 +160,7 @@ module.exports = (app) => {
 
     let documents = null
 
-    const searchByName = async(req, res) => {
+    const searchByName = async (req, res) => {
 
         try {
             let { name } = req.body
