@@ -32,3 +32,4 @@ node_modules
 
 # arquivos gerados por scripts
 assets/generated/*.json
+assets/generated/*.csv

@@ -9,6 +9,10 @@ data = sys.argv[3]
 collection = sys.argv[4]
 try:
     similars = bool(sys.argv[5])
+except:
+    similars = False
+    
+try:
     local = bool(sys.argv[6])
 except:
     local = False

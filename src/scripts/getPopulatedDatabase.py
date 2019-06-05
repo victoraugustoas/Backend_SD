@@ -26,12 +26,8 @@ collection = db[collection]
 
 documents = list(collection.find())
 
-if (local):
-    try:
-        for doc in documents:
-            doc['_id'] = str(doc['_id'])
-    except:
-        pass
+for doc in documents:
+    doc['_id'] = str(doc['_id'])
 
 with open(pathToSave+'/getDatabase.json', 'w') as arq:
     json.dump(documents, arq)
