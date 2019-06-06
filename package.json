@@ -12,6 +12,10 @@
         "type": "git",
         "url": "git+https://github.com/victoraugustoas/Backend_SD.git"
     },
+    "header": {
+        "title": "NutrionAll - header",
+        "filename": "./src/util/doc/header.md"
+    },
     "keywords": [],
     "author": "",
     "license": "ISC",
