@@ -34,3 +34,6 @@ password_db.txt
 # arquivos gerados por scripts
 assets/generated/*.json
 assets/generated/*.csv
+
+#documentação
+apidoc/

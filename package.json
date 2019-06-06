@@ -5,7 +5,8 @@
     "main": "app.js",
     "scripts": {
         "dev": "NODE_ENV=development nodemon",
-        "start": "node app.js"
+        "start": "node app.js",
+        "doc": "apidoc -i ./ -o apidoc/ -e node_modules"
     },
     "repository": {
         "type": "git",
@@ -32,5 +33,9 @@
     },
     "devDependencies": {
         "nodemon": "^1.19.1"
+    },
+    "apidoc": {
+        "name": "Backend - TPF SD",
+        "title": "Backend - SD"
     }
 }
