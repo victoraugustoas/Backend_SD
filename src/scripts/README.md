@@ -11,6 +11,7 @@ Esse comando é responsável por instalar as dependencias necessárias pra corre
 
 ## Convenções
 1. Os arquivos gerados por scripts deverão ser colocados na pasta `assets/generated`.
+2. Para se conectar com o banco de dados utilizando os scripts é necessário um arquivo chamado `password_db.txt` que conterá a senha de conexão com o banco de dados.
 
 ## Scripts
 - `csvBaseToJSON.py`

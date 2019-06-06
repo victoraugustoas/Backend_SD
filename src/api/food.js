@@ -118,8 +118,8 @@ module.exports = (app) => {
     }
 
     const getNutrientsNotPremium = (food) => {
-        let { name, category, energy, humidity, protein, lipids, carbohydrate } = food
-        let notPremium = { name, category, energy, humidity, protein, lipids, carbohydrate }
+        let { _id, name, category, energy, humidity, protein, lipids, carbohydrate } = food
+        let notPremium = { _id, name, category, energy, humidity, protein, lipids, carbohydrate }
         return notPremium
     }
 
