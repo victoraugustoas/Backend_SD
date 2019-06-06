@@ -12,10 +12,6 @@
         "type": "git",
         "url": "git+https://github.com/victoraugustoas/Backend_SD.git"
     },
-    "header": {
-        "title": "NutrionAll - header",
-        "filename": "./src/util/doc/header.md"
-    },
     "keywords": [],
     "author": "",
     "license": "ISC",
@@ -40,6 +36,10 @@
     },
     "apidoc": {
         "name": "Backend - TPF SD",
-        "title": "Backend - SD"
+        "title": "Backend - SD",
+        "header": {
+            "title": "NutrionAll - Info",
+            "filename": "src/util/doc/header.md"
+        }
     }
 }
