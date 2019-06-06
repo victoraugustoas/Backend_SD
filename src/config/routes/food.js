@@ -3,6 +3,7 @@ const router = express.Router()
 
 module.exports = (app) => {
 
+
     // CRUD
     router.post('/', app.auth.authenticate(), app.food.save)
     /**
@@ -10,11 +11,11 @@ module.exports = (app) => {
      * @api {get} /food/:id Informações do alimento e similares
      * @apiGroup Food
      * 
+     * @apiHeader  (HeaderParams) {Token} Authorization Token de autenticação
+     * @apiParam (URLParams) {ObjectID} ID ID do alimento
      * 
-     * @apiParam  {ObjectID} ID ID do alimento
-     * 
-     * @apiSuccess (200) {Object} food Alimento com os nutrientes, usuários premium e free
-     * @apiSuccess (200) {Object[]} lstSimilars Array com alimentos similares ao atributo food, somente para usuários premium
+     * @apiSuccess (Sucess 200) {Object} food Alimento com os nutrientes, usuários premium e free
+     * @apiSuccess (Sucess 200) {Object[]} lstSimilars Array com alimentos similares ao atributo food, somente para usuários premium
      * 
      * @apiParamExample  {URL Params} Request-Example:
      * /food/5cf845fe245413a64b405024
@@ -173,20 +174,22 @@ module.exports = (app) => {
      * 
      * @api {get} /food/search/nutrient/ Ranking de alimentos para determinado nutriente
      * @apiGroup Food
+     * @apiHeader (HeaderParams) {Token} Authorization Token de autenticação
      * 
      * 
-     * @apiParam  {String} nutrient Nome do nutriente
-     * @apiParam {String} sort Podendo variar entre (asc, desc)
-     * @apiParam {Int} limit Limite de documentos a ser retornado
-     * @apiParam {Int} page Número da página a ser retornada na paginação
+     * @apiParam (QueryStringParams) {String} nutrient Nome do nutriente
+     * @apiParam (QueryStringParams) {String} sort Podendo variar entre (asc, desc)
+     * @apiParam (QueryStringParams) {Int} limit Limite de documentos a ser retornado
+     * @apiParam (QueryStringParams) {Int} page Número da página a ser retornada na paginação
      * 
-     * @apiSuccess (200) {Int} page Diz a página atual retornada pela paginação
-     * @apiSuccess (200) {Int} limit Limite de documentos presentes em data
-     * @apiSuccess (200) {Object[]} data Array de alimentos
+     * @apiSuccess (Sucess 200) {Int} page Diz a página atual retornada pela paginação
+     * @apiSuccess (Sucess 200) {Int} limit Limite de documentos presentes em data
+     * @apiSuccess (Sucess 200) {Object[]} data Array de alimentos
      * 
      * @apiParamExample  {Query String} Request-Example:
      * /food/search/nutrient/?nutrient=lipids&sort=desc&limit=5&page=2
-     *      
+     * 
+     * 
      * @apiSuccessExample {json} Success-Response:
      * {
     "page": 2,
@@ -201,8 +204,8 @@ module.exports = (app) => {
      * @apiDescription Array de alimentos que casam com a string
      * @apiGroup Food
      * 
-     * 
-     * @apiParam  {String} name Nome do alimento a ser buscado
+     * @apiHeader  (HeaderParams) {Token} Authorization Token de autenticação
+     * @apiParam (BodyParams) {String} name Nome do alimento a ser buscado
      * 
      * 
      * @apiParamExample  {Body Params} Request-Example:
