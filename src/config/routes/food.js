@@ -7,7 +7,7 @@ module.exports = (app) => {
     router.post('/', app.auth.authenticate(), app.food.save)
     /**
      * 
-     * @api {get} /food/:id Informações do alimento
+     * @api {get} /food/:id Informações do alimento e similares
      * @apiGroup Food
      * 
      * 
@@ -195,6 +195,84 @@ module.exports = (app) => {
 }
      */
     router.get('/search/nutrient/', app.auth.authenticate(), app.food.searchByNutrient)
+    /**
+     * 
+     * @api {post} /food/search/name/ Busca por nome de alimento
+     * @apiDescription Array de alimentos que casam com a string
+     * @apiGroup Food
+     * 
+     * 
+     * @apiParam  {String} name Nome do alimento a ser buscado
+     * 
+     * 
+     * @apiParamExample  {Body Params} Request-Example:
+     * {
+     *     "name" : "arroz"
+     * }
+     * 
+     * 
+     * @apiSuccessExample {json} Success-Response:
+     * [
+    {
+        "name": {
+            "value": "arroz integral cozido"
+        },
+        "category": {
+            "value": "cereais e derivados"
+        },
+        "energy": {
+            "value": 786.91,
+            "type": "Kj"
+        },
+        "humidity": {
+            "value": 70.1,
+            "type": "%"
+        },
+        "protein": {
+            "value": 3.957,
+            "type": "g"
+        },
+        "lipids": {
+            "value": 1.522,
+            "type": "g"
+        },
+        "carbohydrate": {
+            "value": 39.269,
+            "type": "g"
+        }
+    },
+    {
+        "name": {
+            "value": "noz crua"
+        },
+        "category": {
+            "value": "leguminosas e derivados"
+        },
+        "energy": {
+            "value": 1267.84,
+            "type": "Kj"
+        },
+        "humidity": {
+            "value": 6.2,
+            "type": "%"
+        },
+        "protein": {
+            "value": 6.843,
+            "type": "g"
+        },
+        "lipids": {
+            "value": 29.032,
+            "type": "g"
+        },
+        "carbohydrate": {
+            "value": 8.993,
+            "type": "g"
+        }
+    }
+]
+     * 
+     * 
+     */
     router.post('/search/name/', app.auth.authenticate(), app.food.searchByName)
 
     app.use('/food', router)
