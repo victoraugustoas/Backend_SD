@@ -22,5 +22,13 @@ module.exports = {
                 status
             }
         }
+    },
+    validateUserNotPremium(user, msg, status) {
+        if (!user.isPremium) {
+            throw {
+                msg,
+                status
+            }
+        }
     }
 }
