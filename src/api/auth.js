@@ -38,11 +38,11 @@ module.exports = (app) => {
             })
 
         } catch (error) {
+            console.log(error)
             if (error.status) {
                 let { msg } = error
                 return res.status(error.status).send({ msg })
             } else {
-                console.log(error)
                 return res.status(500).send(error)
             }
         }
@@ -74,7 +74,7 @@ module.exports = (app) => {
     const strategy = new Strategy({
         secretOrKey: process.env.AUTH_SECRET,
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
-    }, async(payload, done) => {
+    }, async (payload, done) => {
         let user = await User.findById(payload._id)
         if (user) {
             done(null, user ? user : false)
