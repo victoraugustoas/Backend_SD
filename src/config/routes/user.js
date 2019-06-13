@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const multer = require('multer')
+const multerConfig = require('../multerConfig')
 
 module.exports = (app) => {
 
@@ -42,7 +44,7 @@ module.exports = (app) => {
      * 
      * 
      */
-    router.post('/', app.user.save)
+    router.post('/', multer(multerConfig).single('urlImg'), app.user.save)
     /**
      * 
      * @api {get} /user/:id Recupera dados do usuário

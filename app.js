@@ -1,11 +1,17 @@
 const express = require('express')
 const app = express()
+const cloudinary = require('cloudinary').v2
 
 // variáveis de ambiente
 require('dotenv').config()
 
 // DATABASE
 require('./src/config/db')(app)
+
+// CLOUDINARY - CDN
+const cloudinaryConfig = require('./src/config/cloudinaryConfig')()
+cloudinary.config(cloudinaryConfig)
+app.cloudinary = cloudinary
 
 // MIDDLEWARES
 require('./src/config/middlewares')(app)

@@ -11,9 +11,10 @@ module.exports = (app) => {
     }
 
     const save = async (req, res) => {
-        let { name, email, gender, password, dateOfBirth, urlImg, isPremium } = req.body
-
         try {
+            let { name, email, gender, password, dateOfBirth, urlImg, isPremium } = req.body
+            let image = null
+
             validateNotExistFieldOrError(name, `Informe seu nome.`, 400)
             validateNotExistFieldOrError(email, `Informe seu email.`, 400)
             validateNotExistFieldOrError(gender, `Informe seu sexo.`, 400)
@@ -25,7 +26,28 @@ module.exports = (app) => {
 
             password = await encryptPassword(password)
 
-            user = new User({ name, email, gender, password, dateOfBirth, urlImg, isPremium })
+            if (req.file != undefined) {
+                // envia a imagem para a cdn
+                image = await new Promise((resolve, reject) => {
+                    app.cloudinary.uploader.upload(req.file.path, (err, url) => {
+                        if (err) return reject(err);
+                        resolve(url);
+                    })
+                })
+            } else {
+                // imagem padrão
+                if (gender == "true") {
+                    image = {
+                        secure_url: `https://res.cloudinary.com/cdncloudnuvem/image/upload/v1560386735/avatar-pessoa-mulher_ek0qdk.png`
+                    }
+                } else {
+                    image = {
+                        secure_url: `https://res.cloudinary.com/cdncloudnuvem/image/upload/v1560386734/user_fxwore.png`
+                    }
+                }
+            }
+
+            user = new User({ name, email, gender, password, dateOfBirth, urlImg: image.secure_url, isPremium })
 
             let saveOk = await user.save()
             if (saveOk) {
@@ -42,7 +64,7 @@ module.exports = (app) => {
         }
     }
 
-    const getByID = async(req, res) => {
+    const getByID = async (req, res) => {
         let { id } = req.params
 
         try {

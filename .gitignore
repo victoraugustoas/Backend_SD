@@ -37,3 +37,6 @@ assets/generated/*.csv
 
 #documentação
 apidoc/
+
+#upload de imagens
+uploads
