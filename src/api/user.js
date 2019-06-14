@@ -12,6 +12,10 @@ module.exports = (app) => {
 
     const save = async (req, res) => {
         try {
+            // caso a requisição contenha o campo user, então ela é proveniente do frontend android
+            if(req.body.user){
+                req.body = JSON.parse(req.body.user)
+            }
             let { name, email, gender, password, dateOfBirth, urlImg, isPremium } = req.body
             let image = null
 
