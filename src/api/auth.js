@@ -55,7 +55,9 @@ module.exports = (app) => {
             if (userData) {
                 const token = jwt.decode(userData.token, process.env.AUTH_SECRET)
                 if (new Date(token.exp * 1000) > new Date()) {
-                    return res.send(true)
+                    return res.status(200).send({
+                        validToken: true
+                    })
                 }
             }
         } catch (error) {
