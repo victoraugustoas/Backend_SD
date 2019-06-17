@@ -1,6 +1,6 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
-const { validateNotExistFieldOrError, validateExistFieldOrError, validateEmail } = require('../util/utils')
+const { validateNotExistFieldOrError, validateExistFieldOrError, validateEmail, validateDateBirth } = require('../util/utils')
 
 module.exports = (app) => {
 
@@ -13,7 +13,7 @@ module.exports = (app) => {
     const save = async (req, res) => {
         try {
             // caso a requisição contenha o campo user, então ela é proveniente do frontend android
-            if(req.body.user){
+            if (req.body.user) {
                 req.body = JSON.parse(req.body.user)
             }
             let { name, email, gender, password, dateOfBirth, urlImg, isPremium } = req.body
@@ -25,6 +25,7 @@ module.exports = (app) => {
             validateNotExistFieldOrError(gender, `Informe seu sexo.`, 400)
             validateNotExistFieldOrError(password, `Informe seu password.`, 400)
             validateNotExistFieldOrError(dateOfBirth, `Informe sua data de nascimento.`, 400)
+            validateDateBirth(dateOfBirth, `Informe uma data de nascimento válida.`, 400)
 
             let user = await User.find({ email })
             validateExistFieldOrError(user, `Usuário já cadastrado!`, 409)
