@@ -1,3 +1,5 @@
+const validator = require('validator')
+const moment = require('moment')
 module.exports = {
     validateNotExistFieldOrError(field, msg, status) {
         // se o campo n estiver setado, lança um erro
@@ -25,6 +27,21 @@ module.exports = {
     },
     validateUserNotPremium(user, msg, status) {
         if (!user.isPremium) {
+            throw {
+                msg,
+                status
+            }
+        }
+    },
+    validateEmail(email, msg, status) {
+        if (!validator.isEmail(email)) {
+            throw {
+                msg, status
+            }
+        }
+    },
+    validateDateBirth(date, msg, status) {
+        if (!moment(date, "DD/MM/YYYY").isValid()) {
             throw {
                 msg,
                 status

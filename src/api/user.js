@@ -1,6 +1,6 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
-const { validateNotExistFieldOrError, validateExistFieldOrError } = require('../util/utils')
+const { validateNotExistFieldOrError, validateExistFieldOrError, validateEmail } = require('../util/utils')
 
 module.exports = (app) => {
 
@@ -21,6 +21,7 @@ module.exports = (app) => {
 
             validateNotExistFieldOrError(name, `Informe seu nome.`, 400)
             validateNotExistFieldOrError(email, `Informe seu email.`, 400)
+            validateEmail(email, "Email inválido!", 400)
             validateNotExistFieldOrError(gender, `Informe seu sexo.`, 400)
             validateNotExistFieldOrError(password, `Informe seu password.`, 400)
             validateNotExistFieldOrError(dateOfBirth, `Informe sua data de nascimento.`, 400)
