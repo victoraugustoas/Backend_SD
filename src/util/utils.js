@@ -41,7 +41,9 @@ module.exports = {
         }
     },
     validateDateBirth(date, msg, status) {
-        if (!moment(date, "DD/MM/YYYY").isValid()) {
+        let validLength = date.length >= 8
+        let validDate = moment(date, "DD MM YYYY").isValid()
+        if (!validLength || !validDate) {
             throw {
                 msg,
                 status
