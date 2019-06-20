@@ -130,11 +130,6 @@ module.exports = (app) => {
             let limit = parseInt(req.query.limit)
             let page = parseInt(req.query.page)
 
-            // caso a página seja 1
-            if (page == 1) {
-                page = 0
-            }
-
             validateNotExistFieldOrError(nutrient, `Informe o nutriente na query string.`, 400)
             validateNotExistFieldOrError(sortBy, `Informe a direção da ordenação na query string.`, 400)
             validateNotExistFieldOrError(limit, `Informe o limite de documentos na query string.`, 400)

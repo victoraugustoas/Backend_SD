@@ -3,7 +3,7 @@ const moment = require('moment')
 module.exports = {
     validateNotExistFieldOrError(field, msg, status) {
         // se o campo n estiver setado, lança um erro
-        if (!field) {
+        if (!(typeof field === 'number') && !field) {
             throw {
                 msg,
                 status
