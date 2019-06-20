@@ -216,7 +216,9 @@ module.exports = (app) => {
 
             // ordena os elementos de acordo com sua similaridade
             let ordened = distance.sort((a, b) => {
-                return a - b
+                a = a.similarity
+                b = b.similarity
+                return b - a
             })
 
             distance = ordened.slice(0, 9)
