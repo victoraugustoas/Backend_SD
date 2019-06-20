@@ -57,7 +57,7 @@ module.exports = (app) => {
                 }
             } else {
                 // Caso o usuário não seja premium
-                return res.status(400).send(getNutrientsNotPremium(food))
+                return res.status(200).send(getNutrientsNotPremium(food))
             }
 
             if (food && lstSimilars) {
