@@ -4,9 +4,16 @@ const { validateExistFieldOrError, validateNotExistFieldOrError, validateUserNot
 module.exports = (app) => {
 
     const save = async (req, res) => {
-        let { name, description, visibility, classification, urlImg, avgEvaluation, ingredients } = req.body
 
         try {
+            let { name, description, visibility, classification, urlImg, avgEvaluation, ingredients } = req.body
+            let image = null
+
+            // converte em JSON caso ainda seja string
+            if (typeof ingredients == "string") {
+                ingredients = JSON.parse(ingredients)
+            }
+
             validateNotExistFieldOrError(name, `Infome o nome da refeição.`, 400)
             validateNotExistFieldOrError(classification, `Informe a classificação da refeição.`, 400)
 
@@ -15,13 +22,28 @@ module.exports = (app) => {
             validateUserNotPremium(req.user, `Funcionalidade disponível apenas para usuários premium.`, 403)
             let idUser = req.user._id
 
+            if (req.file != undefined) {
+                // envia a imagem para a cdn
+                image = await new Promise((resolve, reject) => {
+                    app.cloudinary.uploader.upload(req.file.path, (err, url) => {
+                        if (err) return reject(err);
+                        resolve(url);
+                    })
+                })
+            } else {
+                // imagem padrão
+                image = {
+                    secure_url: `https://res.cloudinary.com/cdncloudnuvem/image/upload/v1561059934/meal_oanr0n.png`
+                }
+            }
+
             let newMeal = new Meal({
                 name,
                 description,
                 idUser,
                 visibility,
                 classification,
-                urlImg,
+                urlImg: image.secure_url,
                 avgEvaluation,
                 ingredients
             })
