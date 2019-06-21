@@ -6,6 +6,11 @@ module.exports = (app) => {
     const save = async (req, res) => {
 
         try {
+            // caso a requisição contenha o campo meal, então ela é proveniente do frontend android
+            if (req.body.meal) {
+                req.body = JSON.parse(req.body.meal)
+            }
+
             let { name, description, visibility, classification, urlImg, avgEvaluation, ingredients } = req.body
             let image = null
 
