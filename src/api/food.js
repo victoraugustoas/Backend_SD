@@ -59,12 +59,6 @@ module.exports = (app) => {
                 // Caso o usuário não seja premium
                 return res.status(200).send(getNutrientsNotPremium(food))
             }
-
-            if (food && lstSimilars) {
-                return res.status(200).send({ food, lstSimilars })
-            } else {
-                return res.status(404).send({ msg: `Alimento nao encontrado` })
-            }
         } catch (error) {
             if (error.status) {
                 let { msg } = error
