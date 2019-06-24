@@ -129,8 +129,20 @@ module.exports = (app) => {
             validateUserNotPremium(req.user, `Funcionalidade disponível apenas para usuários premium.`, 403)
 
             let eraseOk = await Meal.findByIdAndDelete(id)
+            let { urlImg } = eraseOk
+
             if (eraseOk) {
-                return res.status(200).send({ msg: `Refeição removida com sucesso.` })
+                let idImg = String(urlImg).split("upload/")[1].split('/')[1].split(".jpg")[0]
+                image = await new Promise((resolve, reject) => {
+                    app.cloudinary.uploader.destroy(idImg, (err, url) => {
+                        if (err) return reject(err);
+                        resolve(url);
+                    })
+                })
+
+                if (image) {
+                    return res.status(200).send({ msg: `Refeição removida com sucesso.` })
+                }
             } else {
                 return res.status(404).send({ msg: `Não foi possível encontrar a refeição.` })
             }
