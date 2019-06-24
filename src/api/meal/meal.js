@@ -157,10 +157,34 @@ module.exports = (app) => {
         }
     }
 
+    const listAll = async (req, res) => {
+        try {
+            const user = req.user
+            let mealsUser = await Meal.find({ idUser: user._id })
+
+            validateUserNotPremium(req.user, `Funcionalidade disponível apenas para usuários premium.`, 403)
+
+            if (mealsUser) {
+                return res.status(200).send(mealsUser)
+            } else {
+                return res.status(404).send({ msg: `Não foi possível encontrar o usuário!` })
+            }
+        } catch (error) {
+            if (error.status) {
+                let { msg } = error
+                return res.status(error.status).send({ msg })
+            } else {
+                console.log(error)
+                return res.status(500).send(String(error))
+            }
+        }
+    }
+
     app.meal = {
         save,
         getByID,
         edit,
-        erase
+        erase,
+        listAll
     }
 }

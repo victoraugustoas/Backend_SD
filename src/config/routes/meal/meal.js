@@ -10,5 +10,7 @@ module.exports = (app) => {
     router.put('/:id', app.auth.authenticate(), app.meal.edit)
     router.delete('/:id', app.auth.authenticate(), app.meal.erase)
 
+    router.get('/', app.auth.authenticate(), app.meal.listAll)
+
     app.use('/meal', router)
 }
