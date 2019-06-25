@@ -4,6 +4,8 @@ const multer = require('multer')
 const multerConfig = require('../../multerConfig')
 
 module.exports = (app) => {
+    router.get('/searchByName/', app.auth.authenticate(), app.meal.searchByName)
+    
     // CRUD
     router.post('/', app.auth.authenticate(), multer(multerConfig).single('urlImg'), app.meal.save)
     router.get('/:id', app.auth.authenticate(), app.meal.getByID)

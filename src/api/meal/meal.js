@@ -1,4 +1,5 @@
 const Meal = require('../../models/Meal/Meal')
+const jaroWinkler = require('jaro-winkler')
 const { validateExistFieldOrError, validateNotExistFieldOrError, validateUserNotPremium } = require('../../util/utils')
 
 module.exports = (app) => {
@@ -180,11 +181,59 @@ module.exports = (app) => {
         }
     }
 
+    const searchByName = async (req, res) => {
+        try {
+            let { name, category } = req.query
+            let distance = []
+
+            let seachOk = await Meal.find({ classification: category })
+
+            // calcula a similaridade para todos os documentos presentes na base
+            seachOk.forEach((ele) => {
+                let aux = {
+                    similarity: 0,
+                    data: null
+                }
+
+                // similaridade de strings utilizando jaro-winkler
+                aux.similarity = jaroWinkler(name, ele.name)
+                aux.data = ele
+
+                distance.push(aux)
+            })
+
+            // ordena os elementos de acordo com sua similaridade
+            let ordened = distance.sort((a, b) => {
+                a = a.similarity
+                b = b.similarity
+                return b - a
+            })
+
+            distance = ordened.slice(0, 9)
+            distance = distance.map((ele) => {
+                return ele.data
+            })
+
+            return res.status(200).send(distance)
+
+        } catch (error) {
+            if (error.status) {
+                let { msg } = error
+                return res.status(error.status).send({ msg })
+            } else {
+                console.log(error)
+                return res.status(500).send(String(error))
+            }
+        }
+
+    }
+
     app.meal = {
         save,
         getByID,
         edit,
         erase,
-        listAll
+        listAll,
+        searchByName
     }
 }
