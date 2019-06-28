@@ -29,7 +29,7 @@ module.exports = (app) => {
                 urlImg: user.urlImg,
                 gender: user.gender,
                 iat: now, // token emitido em,
-                exp: now + (60 * 60 * 24 * 3) // token expira em 3 dias
+                exp: now + (60 * 60 * 24 * process.env.TOKEN_DAYS) // token expira em X dias
             }
 
             res.status(200).json({
@@ -65,12 +65,11 @@ module.exports = (app) => {
                 let { msg } = error
                 return res.status(error.status).send({ msg })
             } else {
-                console.log(error)
-                return res.status(500).send(error)
+                return res.status(401).send({
+                    validToken: false
+                })
             }
         }
-
-        res.send(false)
     }
 
     const strategy = new Strategy({
