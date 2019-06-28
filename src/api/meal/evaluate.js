@@ -104,7 +104,7 @@ module.exports = (app) => {
             let eraseOk = Evaluate.findByIdAndDelete(id)
 
             if (eraseOk) {
-                return res.status(200).send({ msg: `Favorito removido com sucesso!` })
+                return res.status(200).send({ msg: `Avaliação removida com sucesso!` })
             } else {
                 return res.status(404).send({ msg: `Não foi possível encontrar o favorito!` })
             }

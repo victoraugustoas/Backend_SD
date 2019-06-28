@@ -1,4 +1,5 @@
 const Meal = require('../../models/Meal/Meal')
+const Evaluate = require('../../models/Meal/Evaluate')
 const jaroWinkler = require('jaro-winkler')
 const { validateExistFieldOrError, validateNotExistFieldOrError, validateUserNotPremium } = require('../../util/utils')
 
@@ -228,12 +229,32 @@ module.exports = (app) => {
 
     }
 
+    const updateAvg = async () => {
+        console.log('running update average evaluations for meals')
+        let meals = await Meal.find()
+
+        for (let i = 0; i < meals.length; i++) {
+            let meal = meals[i]
+            let avg = 0
+
+            let evaluations = await Evaluate.find({ mealID: meal._id })
+
+            if (evaluations.length > 0) {
+                for (let j = 0; j < evaluations.length; j++) {
+                    avg += evaluations[j].evaluation
+                }
+            }
+            let update = Meal.findByIdAndUpdate(meal._id, { avgEvaluation: avg })
+        }
+    }
+
     app.meal = {
         save,
         getByID,
         edit,
         erase,
         listAll,
-        searchByName
+        searchByName,
+        updateAvg
     }
 }

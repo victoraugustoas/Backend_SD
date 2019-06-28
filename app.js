@@ -31,6 +31,9 @@ require('./src/config/routes/meal/meal')(app)
 require('./src/config/routes/meal/favorite')(app)
 require('./src/config/routes/meal/evaluate')(app)
 
+// TASKS
+require('./src/config/tasks')(app)
+
 app.listen(process.env.PORT, () => {
     console.log(`Backend funcionando na porta ${process.env.PORT}`)
 })
