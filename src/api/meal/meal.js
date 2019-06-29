@@ -243,8 +243,9 @@ module.exports = (app) => {
                 for (let j = 0; j < evaluations.length; j++) {
                     avg += evaluations[j].evaluation
                 }
+                avg = avg / evaluations.length
             }
-            let update = Meal.findByIdAndUpdate(meal._id, { avgEvaluation: avg })
+            let update = await Meal.findByIdAndUpdate(meal._id, { avgEvaluation: avg })
         }
     }
 
