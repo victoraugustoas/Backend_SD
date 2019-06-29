@@ -12,7 +12,7 @@ module.exports = (app) => {
     │    └──────────────────── minute(0 - 59)
     └───────────────────────── second(0 - 59, OPTIONAL) 
     */
-    let updateAvg = schedule.scheduleJob(`*    *    ${process.env.SCHEDULE_JOBS}    *    *    *`, () => {
+    let updateAvg = schedule.scheduleJob(`*    1    ${process.env.SCHEDULE_JOBS}    *    *    *`, () => {
         app.meal.updateAvg()
     })
 
