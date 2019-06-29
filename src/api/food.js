@@ -15,7 +15,6 @@ module.exports = (app) => {
             validateNotExistFieldOrError(category, `Informe o nome do alimento.`, 400)
 
             let food = new Food(bodyFood)
-            console.log(food)
             let saveOk = await food.save()
             if (saveOk) {
                 return res.status(201).send({ msg: `Alimento adicionado com sucesso.` })
@@ -233,12 +232,38 @@ module.exports = (app) => {
         }
     }
 
+    const addView = async (req, res) => {
+        try {
+            let { id } = req.params
+
+            validateNotExistFieldOrError(id, `Informe o ID do alimento`, 400)
+
+            let food = await Food.findById(id)
+            if (food) {
+                food.views += 1
+                let updateViews = await Food.findByIdAndUpdate(food._id, { views: food.views })
+                return res.status(200).send({ msg: `Quantidade de views atualizada` })
+            } else {
+                return res.status(404).send({ msg: `Alimento não encontrado` })
+            }
+        } catch (error) {
+            if (error.status) {
+                let { msg } = error
+                return res.status(error.status).send({ msg })
+            } else {
+                console.log(error)
+                return res.status(500).send(String(error))
+            }
+        }
+    }
+
     app.food = {
         save,
         getByID,
         edit,
         erase,
         searchByNutrient,
-        searchByName
+        searchByName,
+        addView
     }
 }

@@ -6,6 +6,8 @@ if (process.env.NODE_ENV === 'production') {
     mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@mongodbatlas-ymqp4.mongodb.net/${process.env.DB_TEST}?retryWrites=true`, { useNewUrlParser: true })
     // mongoose.connect(`mongodb://localhost:27017/${process.env.DB_TEST}`, { useNewUrlParser: true })
 }
+// To fix all deprecation warnings
+mongoose.set('useFindAndModify', false)
 
 module.exports = (app) => {
     const db = mongoose.connection

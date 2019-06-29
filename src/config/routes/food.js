@@ -3,7 +3,6 @@ const router = express.Router()
 
 module.exports = (app) => {
 
-
     // CRUD
     router.post('/', app.auth.authenticate(), app.food.save)
     /**
@@ -277,6 +276,8 @@ module.exports = (app) => {
      * 
      */
     router.post('/search/name/', app.auth.authenticate(), app.food.searchByName)
+
+    router.put('/addView/:id', app.auth.authenticate(), app.food.addView)
 
     app.use('/food', router)
 }

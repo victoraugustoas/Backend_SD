@@ -42,7 +42,11 @@ const foodSchema = new Schema({
     riboflavin: definition,
     pyridoxine: definition,
     niacin: definition,
-    'vitamin c': definition
+    'vitamin c': definition,
+    views: {
+        type: Number,
+        default: 0
+    }
 })
 
 module.exports = mongoose.model('Foods', foodSchema)
