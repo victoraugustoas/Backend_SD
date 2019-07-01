@@ -37,3 +37,5 @@ require('./src/config/tasks')(app)
 app.listen(process.env.PORT, () => {
     console.log(`Backend funcionando na porta ${process.env.PORT}`)
 })
+
+module.exports = app
