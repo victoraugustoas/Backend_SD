@@ -58,11 +58,10 @@ module.exports = (app) => {
     const erase = async (req, res) => {
         try {
             let { id } = req.params
-            validateNotExistFieldOrError(id, `Forneça o id do favorito.`, 400)
-
+            validateNotExistFieldOrError(id, `Forneça o id da refeição.`, 400)
             validateUserNotPremium(req.user, `Funcionalidade disponível apenas para usuários premium.`, 403)
 
-            let eraseOk = await Favorite.findByIdAndDelete(id)
+            let eraseOk = await Favorite.findOne({ idMeal: id, idUser: req.user._id })
 
             if (eraseOk) {
                 return res.status(200).send({ msg: `Favorito removido com sucesso.` })
