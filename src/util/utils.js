@@ -12,13 +12,13 @@ module.exports = {
     },
     validateExistFieldOrError(field, msg, status) {
         // se o campo estiver setado, lança um erro
-        if (field.length >= 1) {
+        if (field != null && field.length >= 1) {
             throw {
                 msg,
                 status
             }
         }
-        if (field && ![]) {
+        if (field) {
             throw {
                 msg,
                 status

@@ -1,5 +1,6 @@
 const Favorite = require('../../models/Meal/Favorite')
 const Meal = require('../../models/Meal/Meal')
+const User = require('../../models/User')
 
 const { validateExistFieldOrError, validateNotExistFieldOrError, validateUserNotPremium } = require('../../util/utils')
 module.exports = (app) => {
@@ -11,6 +12,10 @@ module.exports = (app) => {
 
             validateUserNotPremium(req.user, `Funcionalidade disponível apenas para usuários premium.`, 403)
             let idUser = req.user._id
+
+            let verifyFavorite = await Favorite.findOne({ idUser, idMeal })
+            console.log(!!verifyFavorite)
+            validateExistFieldOrError(verifyFavorite, `Não é possível favoritar novamente a mesma refeição`, 400)
 
             let newFavorite = new Favorite({ idUser, idMeal })
 
@@ -79,9 +84,38 @@ module.exports = (app) => {
         }
     }
 
+    const listAll = async (req, res) => {
+        try {
+            let resp = []
+            let allFav = await Favorite.find({ idUser: req.user._id })
+
+            for (let fav of allFav) {
+                let meal = await Meal.findById(fav.idMeal)
+                let userCreator = await User.findById(meal.idUser)
+                let { name, classification, urlImg } = meal
+
+                resp.push({
+                    name, classification, urlImg,
+                    idMeal: meal._id,
+                    creator: userCreator.name
+                })
+            }
+            return res.status(200).send(resp)
+        } catch (error) {
+            if (error.status) {
+                let { msg } = error
+                return res.status(error.status).send({ msg })
+            } else {
+                console.log(error)
+                return res.status(500).send(error)
+            }
+        }
+    }
+
     app.meal.favorite = {
         save,
         getByID,
-        erase
+        erase,
+        listAll
     }
 }
