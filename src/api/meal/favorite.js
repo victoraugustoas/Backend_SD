@@ -33,11 +33,10 @@ module.exports = (app) => {
     const getByID = async (req, res) => {
         try {
             let { id } = req.params
-            validateNotExistFieldOrError(id, `Forneça o id do favorito.`, 400)
-
+            validateNotExistFieldOrError(id, `Forneça o id da refeição.`, 400)
             validateUserNotPremium(req.user, `Funcionalidade disponível apenas para usuários premium.`, 403)
 
-            let favorite = await Favorite.findById(id)
+            let favorite = await Favorite.findOne({ idUser: req.user._id, idMeal: id })
             if (!favorite) return res.status(404).send({ msg: `Favorito não encontrado.` })
 
             let food = await Meal.findById(favorite.idMeal)
