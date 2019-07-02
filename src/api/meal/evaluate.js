@@ -12,8 +12,7 @@ module.exports = (app) => {
             validateNotExistFieldOrError(evaluation, `Informe um valor entre 0 e 5 para avaliação`, 400)
             validateNotExistFieldOrError(mealID, `Informe o ID da refeição a ser avaliada`, 400)
 
-            let verify = await Evaluate.find({ userID: user._id, mealID })
-
+            let verify = await Evaluate.findOne({ userID: user._id, mealID })
             validateExistFieldOrError(verify, `Não é possível avaliar 2 vezes a mesma refeição!`, 400)
 
             let newEvaluation = new Evaluate({
