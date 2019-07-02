@@ -159,7 +159,7 @@ module.exports = (app) => {
         }
     }
 
-    const listAll = async (req, res) => {
+    const listAllUser = async (req, res) => {
         try {
             const user = req.user
             let mealsUser = await Meal.find({ idUser: user._id })
@@ -168,6 +168,26 @@ module.exports = (app) => {
 
             if (mealsUser) {
                 return res.status(200).send(mealsUser)
+            } else {
+                return res.status(404).send({ msg: `Não foi possível encontrar o usuário!` })
+            }
+        } catch (error) {
+            if (error.status) {
+                let { msg } = error
+                return res.status(error.status).send({ msg })
+            } else {
+                console.log(error)
+                return res.status(500).send(String(error))
+            }
+        }
+    }
+
+    const listAll = async (req, res) => {
+        try {
+            let meals = await Meal.find({ visibility: true }) // recupera as refeições públicas
+
+            if (meals) {
+                return res.status(200).send(meals)
             } else {
                 return res.status(404).send({ msg: `Não foi possível encontrar o usuário!` })
             }
@@ -254,6 +274,7 @@ module.exports = (app) => {
         getByID,
         edit,
         erase,
+        listAllUser,
         listAll,
         searchByName,
         updateAvg
