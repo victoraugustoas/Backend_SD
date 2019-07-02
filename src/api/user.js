@@ -90,11 +90,17 @@ module.exports = (app) => {
     }
 
     const edit = async (req, res) => {
-        let { id } = req.params
-        let { name, email, gender, password, dateOfBirth, urlImg, isPremium } = req.body
-
         try {
-            let newUser = { name, email, gender, password, dateOfBirth, urlImg, isPremium }
+            let { id } = req.params
+            let { name, email, gender, dateOfBirth, isPremium } = req.body
+            let newUser = {}
+
+            if (name != undefined) newUser.name = name
+            if (email != undefined) newUser.email = email
+            if (gender != undefined) newUser.gender = gender
+            if (dateOfBirth != undefined) newUser.dateOfBirth = dateOfBirth
+            if (isPremium != undefined) newUser.isPremium = isPremium
+
             let userOk = await User.findByIdAndUpdate(id, newUser)
 
             if (userOk) {
