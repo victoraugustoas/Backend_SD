@@ -18,7 +18,7 @@ module.exports = {
                 status
             }
         }
-        if (field) {
+        if (field != []) {
             throw {
                 msg,
                 status
