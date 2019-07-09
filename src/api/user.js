@@ -28,6 +28,7 @@ module.exports = (app) => {
             validateDateBirth(dateOfBirth, `Informe uma data de nascimento válida.`, 400)
 
             let user = await User.find({ email })
+            console.log(user)
             validateExistFieldOrError(user, `Usuário já cadastrado!`, 409)
 
             password = await encryptPassword(password)
